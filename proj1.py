@@ -7,7 +7,7 @@ for i in range(7):
     tipo = input()
     # print(tipo)
     if tipo == "*INCIDENCES":
-        temp_sum=[]
+        temp_sum = []
         for nos in ((data['*ELEMENT_GROUPS'])):
             temp_sum.append(int(nos[1]))
         iterations = sum(temp_sum)
@@ -20,7 +20,6 @@ for i in range(7):
         if (tipo == "*COORDINATES"):
             pontos.pop(0)
         nodes.append(pontos)
-
 
     data[tipo] = nodes
 # print(data)
@@ -41,7 +40,7 @@ for incidence in data["*INCIDENCES"]:
     lados.append(L)
     cos = (x1 - x0) / L
     sin = (y1 - y0) / L
-    angs.append([cos,sin])
+    angs.append([cos, sin])
 
 matrizes = []
 
@@ -51,10 +50,10 @@ for incidence in range(len(data["*INCIDENCES"])):
     cos = angs[incidence][0]
     sin = angs[incidence][1]
 
-    ke.append([cos**2, cos*sin,-1*cos**2,-1*cos*sin])
-    ke.append([cos*sin, sin**2,-1*cos*sin,-1*sin**2])
-    ke.append([-1*cos**2,-1*cos*sin,cos**2, cos*sin])
-    ke.append([-1*cos*sin,-1*sin**2,cos*sin, sin**2])
+    ke.append([cos**2, cos*sin, -1*cos**2, -1*cos*sin])
+    ke.append([cos*sin, sin**2, -1*cos*sin, -1*sin**2])
+    ke.append([-1*cos**2, -1*cos*sin, cos**2, cos*sin])
+    ke.append([-1*cos*sin, -1*sin**2, cos*sin, sin**2])
     matrizes.append(ke)
 
 
@@ -69,8 +68,8 @@ for i in range(len(data["*COORDINATES"])):
 matriz_global = []
 
 for i in range(len(data["*ELEMENT_GROUPS"]) * 2):
-    linha=[]
-    for j in range(len(data["*ELEMENT_GROUPS"])* 2):
+    linha = []
+    for j in range(len(data["*ELEMENT_GROUPS"]) * 2):
 
         linha.append(0)
     matriz_global.append(linha)
@@ -80,17 +79,14 @@ counter = 0
 for i in range(len(data["*ELEMENT_GROUPS"])):
     m = matrizes[i]
 
-    E = 210 *( 10**9)
+    E = 210 * (10**9)
     A = 2 * (10**-4)
     l = lados[i]
-
-
 
     gl1 = gl[int(data["*INCIDENCES"][i][1]) - 1]
     gl2 = gl[int(data["*INCIDENCES"][i][2]) - 1]
 
-    glT = [gl1[0],gl1[1], gl2[0], gl2[1]]
-
+    glT = [gl1[0], gl1[1], gl2[0], gl2[1]]
 
     for i in range(4):
         for j in range(4):
@@ -98,7 +94,8 @@ for i in range(len(data["*ELEMENT_GROUPS"])):
             if (matriz_global[glT[i]][glT[j]] == 0):
                 matriz_global[glT[i]][glT[j]] = v
             else:
-                matriz_global[glT[i]][glT[j]] = matriz_global[glT[i]][glT[j]] + v
+                matriz_global[glT[i]][glT[j]
+                                      ] = matriz_global[glT[i]][glT[j]] + v
 
 # print(np.matrix(matriz_global))
 # print(data)
@@ -107,16 +104,15 @@ temp = []
 temp2 = []
 
 
-for i in range(len(data["*COORDINATES"]) *2):
+for i in range(len(data["*COORDINATES"]) * 2):
     temp.append(1)
 
 for i in range(len(data["*COORDINATES"])):
-    temp2.append([1,1])
-
+    temp2.append([1, 1])
 
 
 for grau_list in data["*BCNODES"]:
-    temp2[int(grau_list[0])-1][int(grau_list[1])-1] =0
+    temp2[int(grau_list[0])-1][int(grau_list[1])-1] = 0
 
 index_count = 0
 glcort = []
@@ -152,11 +148,20 @@ for i in range(len(flat_temp2)):
 
 #
 for list in data["*LOADS"]:
-    F[int(list[0]) + int(list[1]) ] = int(list[2])
+    F[int(list[0]) + int(list[1])] = int(list[2])
 
 
 #
 # print(np.matrix(matriz_global))
 # print(np.matrix(matrix_calcula))
-print(F)
+# print(F)
 # print(glcort)
+
+ff = []
+for i in range(len(glcort)):
+    ff.append(F[glcort[i]])
+
+    # matrix_calcula.append(linha)
+
+
+# print(ff)
