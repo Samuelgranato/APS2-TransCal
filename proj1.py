@@ -127,21 +127,36 @@ for i in range(len(temp2)):
         if temp2[i][j] == 1:
             glcort.append(index_count - 1)
 
-print(glcort)
+# print(glcort)
 
 # print(len(matriz_global))
 
 matrix_calcula = []
-for i in range(3):
+for i in range(len(glcort)):
     linha = []
-    for j in range(3):
+    for j in range(len(glcort)):
         linha.append(matriz_global[glcort[i]][glcort[j]])
 
     matrix_calcula.append(linha)
 
 
+flat_temp2 = []
+for sublist in temp2:
+    for item in sublist:
+        flat_temp2.append(item)
+
+F = []
+for i in range(len(flat_temp2)):
+    F.append(0)
 
 
-print(np.matrix(matriz_global))
-print(np.matrix(matrix_calcula))
+#
+for list in data["*LOADS"]:
+    F[int(list[0]) + int(list[1]) ] = int(list[2])
+
+
+#
+# print(np.matrix(matriz_global))
+# print(np.matrix(matrix_calcula))
+print(F)
 # print(glcort)
