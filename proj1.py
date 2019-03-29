@@ -20,7 +20,7 @@ for i in range(7):
         if (tipo == "*COORDINATES"):
             pontos.pop(0)
         nodes.append(pontos)
-        
+
 
     data[tipo] = nodes
 # print(data)
@@ -40,8 +40,8 @@ for incidence in data["*INCIDENCES"]:
     L = math.sqrt((x1 - x0)**2 + (y1 - y0)**2)
     lados.append(L)
     cos = (x1 - x0) / L
-    sin = (y1 - y0) / L   
-    angs.append([cos,sin])    
+    sin = (y1 - y0) / L
+    angs.append([cos,sin])
 
 matrizes = []
 
@@ -61,7 +61,7 @@ for incidence in range(len(data["*INCIDENCES"])):
 gl = []
 count = 0
 for i in range(len(data["*COORDINATES"])):
-    
+
     gl.append([count, count + 1])
     count += 2
 
@@ -79,18 +79,18 @@ for i in range(len(data["*ELEMENT_GROUPS"]) * 2):
 counter = 0
 for i in range(len(data["*ELEMENT_GROUPS"])):
     m = matrizes[i]
-    
+
     E = 210 *( 10**9)
     A = 2 * (10**-4)
     l = lados[i]
 
-    
-    
+
+
     gl1 = gl[int(data["*INCIDENCES"][i][1]) - 1]
     gl2 = gl[int(data["*INCIDENCES"][i][2]) - 1]
 
     glT = [gl1[0],gl1[1], gl2[0], gl2[1]]
-    
+
 
     for i in range(4):
         for j in range(4):
@@ -99,23 +99,29 @@ for i in range(len(data["*ELEMENT_GROUPS"])):
                 matriz_global[glT[i]][glT[j]] = v
             else:
                 matriz_global[glT[i]][glT[j]] = matriz_global[glT[i]][glT[j]] + v
-            
+
 # print(np.matrix(matriz_global))
 # print(data)
 cc = []
 temp = []
+temp2 = []
+
+
 for i in range(len(data["*COORDINATES"]) *2):
     temp.append(1)
 
-count = 0
 for i in range(len(data["*COORDINATES"])):
-    for j in range(2):
-        if (int (data["*BCNODES"][i][0]) == i+1):
-            print("rodou")
-            if (int (data["*BCNODES"][i][1]) == 1):
-                temp[i] =  0
-            elif (int (data["*BCNODES"][i][1]) == 2):
-                temp[i+j] = 0
+    temp2.append([1,1])
+
+# count = 0
+# for i in range(len(data["*COORDINATES"])):
+#     for j in range(2):
+#         if (int (data["*BCNODES"][i][0]) == i+1):
+#             print("rodou")
+#             if (int (data["*BCNODES"][i][1]) == 1):
+#                 temp[i] =  0
+#             elif (int (data["*BCNODES"][i][1]) == 2):
+#                 temp[i+j] = 0
 
 
 # count = 1
@@ -123,19 +129,27 @@ for i in range(len(data["*COORDINATES"])):
 # for i in range(len(data["*BCNODES"])):
 #     if(count == int( data["*BCNODES"][i][0])):
 #         a = int( data["*BCNODES"][i][1])
-
+#
 #         print("entrou {0}".format(count))
 #         if(a == 1 ):
 #             temp[count-1] = 0
 #         else:
 #             temp[count + count_aux] = 0
 
+for grau_list in data["*BCNODES"]:
+    temp2[int(grau_list[0])-1][int(grau_list[1])-1] =0
+
+index_count = 0
+glcort = []
+
+
+
 
 #     count_aux +1
 #     if count_aux == 2:
 #         count_aux = 0
 #         count +=1
-    
+
 
 
 
@@ -147,8 +161,8 @@ for i in range(len(data["*COORDINATES"])):
 #     temp[count] = 0
 
 
-print(temp)
-print(data["*BCNODES"])
+print(np.squeeze(np.asarray(temp2)))
+# print(data["*BCNODES"])
 
 
 
