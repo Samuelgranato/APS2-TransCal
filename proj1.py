@@ -182,19 +182,24 @@ for i in flat_temp2:
 
 forcas = np.matrix(matriz_global) * np.transpose(np.matrix(desloc_global))
 
+vetor_stress = []
 
-x = []
-y = []
-for i in data["*COORDINATES"]:
-    x.append(i[0])
-    y.append(i[1])
-    plt.plot(x,y)
-
-
-plt.show()
-
-
-
-
+for i in angs:
+    vetor_stress.append([-i[0],-i[1],i[0],i[1]])
 
         
+ 
+
+# print(vetor_stress)
+print(desloc_global)
+
+# desloc_stress = []
+# for i in range(0,len(desloc_global), 2):
+#     desloc_stress.append([desloc_global[i], desloc_global[i+1]])
+
+    
+
+# desform_espec = []
+# for i in range(len(lados)):
+#     const = 1/lados[i]
+#     vetor_ang = 
