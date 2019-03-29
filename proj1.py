@@ -1,5 +1,7 @@
 import math
 import numpy as np
+from metnum import *
+import matplotlib.pyplot as plt
 
 data = {}
 temp_iteration = 0
@@ -163,5 +165,36 @@ for i in range(len(glcort)):
 
     # matrix_calcula.append(linha)
 
+desloc = gauss(ff,matrix_calcula,100,10**-4)
 
-# print(ff)
+desloc_global = []
+c = 0
+for i in flat_temp2:
+    if i == 1:
+        desloc_global.append(desloc[c])
+        c +=1
+    else:
+        desloc_global.append(0)
+
+
+
+
+
+forcas = np.matrix(matriz_global) * np.transpose(np.matrix(desloc_global))
+
+
+x = []
+y = []
+for i in data["*COORDINATES"]:
+    x.append(i[0])
+    y.append(i[1])
+    plt.plot(x,y)
+
+
+plt.show()
+
+
+
+
+
+        
