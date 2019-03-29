@@ -1,7 +1,7 @@
 import math
 import numpy as np
 from metnum import *
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 data = {}
 temp_iteration = 0
@@ -191,15 +191,15 @@ for i in angs:
  
 
 # print(vetor_stress)
-print(desloc_global)
+# print(desloc_global)
 
-# desloc_stress = []
-# for i in range(0,len(desloc_global), 2):
-#     desloc_stress.append([desloc_global[i], desloc_global[i+1]])
+desloc_stress = []
+for i in range(0,len(desloc_global), 2):
+    desloc_stress.append([desloc_global[i], desloc_global[i+1]])
 
     
 
-# desform_espec = []
-# for i in range(len(lados)):
-#     const = 1/lados[i]
-#     vetor_ang = 
+desform_espec = []
+for i in range(len(lados)):
+    const = 1/lados[i]
+    vetor_ang = 
