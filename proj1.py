@@ -113,28 +113,7 @@ for i in range(len(data["*COORDINATES"]) *2):
 for i in range(len(data["*COORDINATES"])):
     temp2.append([1,1])
 
-# count = 0
-# for i in range(len(data["*COORDINATES"])):
-#     for j in range(2):
-#         if (int (data["*BCNODES"][i][0]) == i+1):
-#             print("rodou")
-#             if (int (data["*BCNODES"][i][1]) == 1):
-#                 temp[i] =  0
-#             elif (int (data["*BCNODES"][i][1]) == 2):
-#                 temp[i+j] = 0
 
-
-# count = 1
-# count_aux = 0
-# for i in range(len(data["*BCNODES"])):
-#     if(count == int( data["*BCNODES"][i][0])):
-#         a = int( data["*BCNODES"][i][1])
-#
-#         print("entrou {0}".format(count))
-#         if(a == 1 ):
-#             temp[count-1] = 0
-#         else:
-#             temp[count + count_aux] = 0
 
 for grau_list in data["*BCNODES"]:
     temp2[int(grau_list[0])-1][int(grau_list[1])-1] =0
@@ -142,33 +121,27 @@ for grau_list in data["*BCNODES"]:
 index_count = 0
 glcort = []
 
+for i in range(len(temp2)):
+    for j in range(2):
+        index_count += 1
+        if temp2[i][j] == 1:
+            glcort.append(index_count - 1)
 
+print(glcort)
 
+# print(len(matriz_global))
 
-#     count_aux +1
-#     if count_aux == 2:
-#         count_aux = 0
-#         count +=1
+matrix_calcula = []
+for i in range(3):
+    linha = []
+    for j in range(3):
+        linha.append(matriz_global[glcort[i]][glcort[j]])
 
-
-
-
-
-
-#     no = int(node[0])
-#     value = int(node[1])
-
-#     temp[count] = 0
-
-
-print(np.squeeze(np.asarray(temp2)))
-# print(data["*BCNODES"])
+    matrix_calcula.append(linha)
 
 
 
 
-
-
-
-# print(temp)
-# print(cc)
+print(np.matrix(matriz_global))
+print(np.matrix(matrix_calcula))
+# print(glcort)
