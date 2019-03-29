@@ -1,4 +1,9 @@
-def jacobi(F,K,U,maxIT,tol):
+def jacobi(F,K,maxIT,tol):
+
+    U = []
+    for f in F:
+        U.append(0)
+
     U_old = []
     for f in F:
         U_old.append(0)
@@ -36,7 +41,11 @@ def jacobi(F,K,U,maxIT,tol):
         # print(F)
 
 
-def gauss(F,K,U,maxIT,tol):
+def gauss(F,K,maxIT,tol):
+    U = []
+    for f in F:
+        U.append(0)
+
     U_old = []
     for f in F:
         U_old.append(0)
@@ -103,14 +112,12 @@ for i in range(len(K)):
 
 
 
-U = []
-for f in F:
-    U.append(0)
 
 
 
-# jacobi(F,K,U,maxIT,tol)
-gauss(F,K,U,maxIT,tol)
+
+# jacobi(F,K,maxIT,tol)
+gauss(F,K,maxIT,tol)
 
 
 
