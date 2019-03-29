@@ -127,7 +127,7 @@ for i in range(len(temp2)):
 
 # print(glcort)
 
-# print(len(matriz_global))
+# print(temp2)
 
 matrix_calcula = []
 for i in range(len(glcort)):
@@ -147,7 +147,7 @@ F = []
 for i in range(len(flat_temp2)):
     F.append(0)
 
-
+# print(matrix_calcula)
 #
 for list in data["*LOADS"]:
     F[int(list[0]) + int(list[1])] = int(list[2])
@@ -202,4 +202,13 @@ for i in range(0,len(desloc_global), 2):
 desform_espec = []
 for i in range(len(lados)):
     const = 1/lados[i]
-    vetor_ang = 
+    vetor = vetor_stress[i]
+    vetor_desloc_total = []
+    for j in range(len(desloc_stress))
+        vetor_desloc = desloc_stress[]
+        if i+1 < len(lados):
+            vetor_desloc2 = desloc_stress[i+1]
+        else: 
+            vetor_desloc2 = desloc_stress[-1]
+    print(vetor,vetor_desloc)
+    # desform_espec.append()
