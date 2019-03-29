@@ -37,7 +37,7 @@ def jacobi(F,K,maxIT,tol):
         # print()
 
         # print(K)
-    print("JACOBI {0}".format(U))
+    return(U)
         # print(F)
 
 
@@ -81,61 +81,4 @@ def gauss(F,K,maxIT,tol):
         # print()
 
         # print(K)
-    print("GAUSS {0}".format(U))
-        # print(F)
-
-
-
-
-
-# maxIT = int(input("Insira o número máximo de iterações: "))
-# tol = int(input("Insira a tolerância para o erro: "))
-
-maxIT = 45
-tol = 10
-
-K = []
-F = []
-with open('inputmetnumk.txt', 'r') as f:
-    for line in f:
-        K.append(list(map(float,line.split())))
-
-
-with open('inputmetnumf.txt', 'r') as f:
-    for line in f:
-        F.append(float(line))
-
-# multiplica os valores da matriz global por 10⁸
-for i in range(len(K)):
-    for j in range(len(K[i])):
-        K[i][j] *= 100000000
-
-
-
-
-
-
-
-# jacobi(F,K,maxIT,tol)
-gauss(F,K,maxIT,tol)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# print(K)
-# print()
-# print(F)
+    return(U)
