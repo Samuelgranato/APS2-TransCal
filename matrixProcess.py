@@ -52,10 +52,13 @@ def matrixProcess(data):
     # print(np.matrix(matrizes[-1]))
 
     counter = 0
+    E_list = []
     for i in range(len(data["*ELEMENT_GROUPS"])):
         m = matrizes[i]
 
         E = float(data["*MATERIALS"][0][0])
+        E_list.append(E)
+
         A = float(data["*GEOMETRIC_PROPERTIES"][0][0])
         l = lados[i]
 
@@ -138,4 +141,64 @@ def matrixProcess(data):
     for i in range(len(glcort)):
         ff.append(F[glcort[i]])
 
-    return ff, matrix_calcula, flat_temp2,matriz_global
+    return ff, matrix_calcula, flat_temp2,matriz_global,angs,lados,E_list
+
+
+# calcula a deformação dos elementos
+def calcStrain(data,angs,desloc_global,lados):
+    sincos_list =[]
+    sincos_list_aux =[]
+
+    for incidence in range(len(data["*INCIDENCES"])):
+        sincos_list_aux = []
+        cos = angs[incidence][0]
+        sin = angs[incidence][1]
+
+        sincos_list_aux.append(-cos)
+        sincos_list_aux.append(-sin)
+        sincos_list_aux.append(cos)
+        sincos_list_aux.append(sin)
+
+        sincos_list.append(sincos_list_aux)
+    # print(np.array(desloc_global))
+    print(sincos_list)
+    print()
+    print()
+    strain_list = []
+    element_desloc_list = []
+    for incidence in data["*INCIDENCES"]:
+        desloc_aux = []
+        # print((int(incidence[1])-1)*2)
+        # print((int(incidence[1])-1)*2 +1)
+        # print()
+        # print((int(incidence[2])-1)*2)
+        # print((int(incidence[2])-1)*2 +1)
+        # print()
+        desloc_aux.append(desloc_global[(int(incidence[1])-1)*2])
+        desloc_aux.append(desloc_global[(int(incidence[1])-1)*2 +1])
+        desloc_aux.append(desloc_global[(int(incidence[2])-1)*2])
+        desloc_aux.append(desloc_global[(int(incidence[2])-1)*2 +1])
+        # strain_list.append(np.array(desloc_aux))
+        # print(np.array(strain_list))
+        desloc_aux = np.array(desloc_aux)
+        desloc_aux.shape = (len(desloc_aux) , 1)
+        element_desloc_list.append(desloc_aux)
+        # print(desloc_aux)
+        # print(np.array(sincos_list) *  desloc_aux )
+        # print(np.transpose(desloc_aux))
+        # break
+
+    # print(element_desloc_list)
+
+    for i in range(len(data["*INCIDENCES"])):
+        strain_list.append((np.array(sincos_list)[i].dot( element_desloc_list[i]))/lados[i])
+
+    return strain_list
+
+def calcStress(strain_list,E_list):
+    stress_list = []
+    for i in range(len(strain_list)):
+        stress_list.append(strain_list[i] * E_list[i])
+
+    print(np.array(strain_list))
+    print(np.array(stress_list))
