@@ -39,43 +39,6 @@ def matrixProcess(data):
         gl.append([count, count + 1])
         count += 2
 
-
-    matriz_global = []
-
-    for i in range(len(data["*ELEMENT_GROUPS"]) * 2):
-        linha = []
-        for j in range(len(data["*ELEMENT_GROUPS"]) * 2):
-
-            linha.append(0)
-        matriz_global.append(linha)
-
-    # print(np.matrix(matrizes[-1]))
-
-    counter = 0
-    for i in range(len(data["*ELEMENT_GROUPS"])):
-        m = matrizes[i]
-
-        E = float(data["*MATERIALS"][0][0])
-        A = float(data["*GEOMETRIC_PROPERTIES"][0][0])
-        l = lados[i]
-
-        gl1 = gl[int(data["*INCIDENCES"][i][1]) - 1]
-        gl2 = gl[int(data["*INCIDENCES"][i][2]) - 1]
-
-        glT = [gl1[0], gl1[1], gl2[0], gl2[1]]
-
-        for i in range(4):
-            for j in range(4):
-                v = float((E*A)/l) * m[i][j]
-                if (matriz_global[glT[i]][glT[j]] == 0):
-                    matriz_global[glT[i]][glT[j]] = v
-                else:
-                    matriz_global[glT[i]][glT[j]
-                                        ] = matriz_global[glT[i]][glT[j]] + v
-
-    # print(np.matrix(matriz_global))
-    # print(data)
-    cc = []
     temp = []
     temp2 = []
 
@@ -90,24 +53,66 @@ def matrixProcess(data):
     for grau_list in data["*BCNODES"]:
         temp2[int(grau_list[0])-1][int(grau_list[1])-1] = 0
 
+
     index_count = 0
-    glcort = []
+    glcort = {}
 
     for i in range(len(temp2)):
         for j in range(2):
             index_count += 1
             if temp2[i][j] == 1:
-                glcort.append(index_count - 1)
+                glcort[str(index_count - 1)] = temp2[i].count(1)
 
+    c = 0
+    for i in glcort.values():
+        c += i
+
+    matriz_global = []
+
+    for i in range(c):
+        linha = []
+        for j in range(c):
+
+            linha.append(0)
+        matriz_global.append(linha)
+
+    # print(np.matrix(matrizes[-1]))
+    # print(np.matrix(matriz_global))
+
+    counter = 0
+    for i in range(len(data["*ELEMENT_GROUPS"])):
+        m = matrizes[i]
+
+        # E = float(data["*MATERIALS"][0][0])
+        # A = float(data["*GEOMETRIC_PROPERTIES"][0][0])
+        l = lados[i]
+        E = 21 * 10**5
+        A = 10
+
+        gl1 = gl[int(data["*INCIDENCES"][i][1]) - 1]
+        gl2 = gl[int(data["*INCIDENCES"][i][2]) - 1]
+
+        glT = [gl1[0], gl1[1], gl2[0], gl2[1]]
+        for i in range(4):
+            for j in range(4):
+                # print(glT[i], glT[j])
+                v = float((E*A)/l) * m[i][j]
+                if (matriz_global[glT[i]][glT[j]] == 0):
+                    matriz_global[glT[i]][glT[j]] = v
+                else:
+                    matriz_global[glT[i]][glT[j]] = matriz_global[glT[i]][glT[j]] + v
+
+    # print(np.matrix(matriz_global))
+    # print(data)
     # print(glcort)
     # print(lados)
     # print(temp2)
 
     matrix_calcula = []
-    for i in range(len(glcort)):
+    for i in glcort.keys():
         linha = []
-        for j in range(len(glcort)):
-            linha.append(matriz_global[glcort[i]][glcort[j]])
+        for j in glcort.keys():
+            linha.append(matriz_global[int(i)][int(j)])
 
         matrix_calcula.append(linha)
 
@@ -135,7 +140,7 @@ def matrixProcess(data):
     # print(glcort)
 
     ff = []
-    for i in range(len(glcort)):
-        ff.append(F[glcort[i]])
+    for i in glcort.keys():
+        ff.append(F[int(i)])
 
     return ff, matrix_calcula, flat_temp2,matriz_global

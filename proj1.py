@@ -6,12 +6,20 @@ from matrixProcess import *
 
 
 data = getInput()
+
+print (data)
+
 processed = matrixProcess(data)
+
+
 
 ff = processed[0]
 matrix_calcula = processed[1]
 flat_temp2 = processed[2]
 matriz_global = processed[3]
+
+# print(np.matrix(matrix_calcula))
+# print(np.matrix(matriz_global))
 
 desloc = gauss(ff,matrix_calcula,100,10**-4)
 
@@ -31,7 +39,7 @@ print(desloc_global)
 
 forcas = np.matrix(matriz_global) * np.transpose(np.matrix(desloc_global))
 
-print(forcas)
+# print(forcas)
 # vetor_stress = []
 
 # for i in angs:
