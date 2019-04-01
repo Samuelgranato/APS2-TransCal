@@ -40,7 +40,7 @@ for i in flat_temp2:
         desloc_global.append(0)
 
 print()
-print(desloc_global)
+print(np.array(desloc_global))
 
 
 

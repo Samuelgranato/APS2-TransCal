@@ -79,8 +79,8 @@ def matrixProcess(data):
         for k in range(4):
             for l in range(4):
 
-                matriz_rigidez_aux[glT[k]][glT[l]] = ke[k][l]
-                # matriz_rigidez_aux[glT[k]][glT[l]] = ke[k][l] * float(float((E*A))/float(lado))
+                # matriz_rigidez_aux[glT[k]][glT[l]] = ke[k][l]
+                matriz_rigidez_aux[glT[k]][glT[l]] = ke[k][l] * float(float((E*A))/float(lado))
 
                 # matriz_global[glT[i]][glT[j]] += v
 
@@ -107,9 +107,10 @@ def matrixProcess(data):
         temp2.append([1, 1])
 
 
-    print(data["*BCNODES"])
-    for grau_list in data["*BCNODES"]:
-        # print(grau_list)
+    # print(data["*BCNODES"])
+    # print(grau_list)
+    for i in range(len(data["*BCNODES"]) ):
+        grau_list = data["*BCNODES"][i]
         temp2[int(grau_list[0])-1][int(grau_list[1])-1] = 0
 
     # print(temp2)
@@ -135,7 +136,7 @@ def matrixProcess(data):
 
         matrix_calcula.append(linha)
 
-
+    # print(np.array(matrix_calcula))
     flat_temp2 = []
     for sublist in temp2:
         for item in sublist:
@@ -149,9 +150,10 @@ def matrixProcess(data):
     #     print(np.matrix(i))
 
     for list in data["*LOADS"]:
-        F[int(list[0]) + int(list[1])] = int(list[2])
+        F[(int(list[0])-1)*2 + int(list[1]) - 1] = int(list[2])
 
-
+    # print((int(list[0])-1)*2 + int(list[1]) - 1)
+    # print(F)
     #
     # print(np.matrix(matriz_global))
     # print(np.matrix(matrix_calcula))
@@ -161,6 +163,8 @@ def matrixProcess(data):
     ff = []
     for i in range(len(glcort)):
         ff.append(F[glcort[i]])
+
+    # print(ff)
 
     return ff, matrix_calcula, flat_temp2,matriz_global,angs,lados,E_list
 
@@ -222,5 +226,5 @@ def calcStress(strain_list,E_list):
     for i in range(len(strain_list)):
         stress_list.append(strain_list[i] * E_list[i])
 
-    # print(np.array(strain_list))
-    # print(np.array(stress_list))
+    print(np.array(strain_list))
+    print(np.array(stress_list))
