@@ -24,11 +24,12 @@ matriz_global = processed[3]
 angs = processed[4]
 lados = processed[5]
 E_list = processed[6]
+glcort = processed[7]
 
 # print(np.matrix(matrix_calcula))
 # print(np.matrix(matriz_global))
 
-desloc = gauss(ff,matrix_calcula,100,10**-4)
+desloc = gauss(ff,matrix_calcula,1000,10**-4)
 
 desloc_global = []
 c = 0
@@ -39,14 +40,32 @@ for i in flat_temp2:
     else:
         desloc_global.append(0)
 
+print("*DISPLACEMENTS")
+for i in range(0,len(desloc_global),2):
+    print("    {0} {1} {2}".format(int(i/2),desloc_global[i],desloc_global[i+1]))
 print()
-print(np.array(desloc_global))
-
-
-
 
 forcas = np.matrix(matriz_global) * np.transpose(np.matrix(desloc_global))
 
 
 strain_list = calcStrain(data,angs,desloc_global,lados)
+
+print("*ELEMENT_STRAINS")
+for i in range(len(strain_list)):
+    print("    {0} {1}".format(i,np.array(strain_list[i])[0]))
+
+print()
 stress_list = calcStress(strain_list,E_list)
+
+print("*ELEMENT_STRESSES")
+for i in range(len(stress_list)):
+    print("    {0} {1}".format(i,np.array(stress_list[i])[0]))
+print()
+
+print("*REACTION_FORCES")
+for i in range(len(forcas)):
+    if(flat_temp2[i] == 0):
+        if(i%2 == 0):
+            print("    {0} FX = {1}".format(int(i/2)+1,np.array(forcas)[i][0]))
+        else:
+            print("    {0} FY = {1}".format(int(i/2)+1,np.array(forcas)[i][0]))
