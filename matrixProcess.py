@@ -166,7 +166,7 @@ def matrixProcess(data):
 
     # print(ff)
 
-    return ff, matrix_calcula, flat_temp2,matriz_global,angs,lados,E_list
+    return ff, matrix_calcula, flat_temp2,matriz_global,angs,lados,E_list,glcort
 
 
 
@@ -226,5 +226,5 @@ def calcStress(strain_list,E_list):
     for i in range(len(strain_list)):
         stress_list.append(strain_list[i] * E_list[i])
 
-    print(np.array(strain_list))
-    print(np.array(stress_list))
+
+    return stress_list
